@@ -6,7 +6,7 @@
 #    By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 16:08:05 by ebensalt          #+#    #+#              #
-#    Updated: 2022/12/23 18:57:06 by ebensalt         ###   ########.fr        #
+#    Updated: 2022/12/24 14:49:48 by ebensalt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ C = src/minishell.c \
 	src/ft_strlen.c \
 	src/system.c \
 	src/help_sami.c \
-	src/ft_strchr.c
+	src/ft_strchr.c \
+	src/ft_split_exec.c
 O = $(C:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I/goinfre/ebensalt/homebrew/opt/readline/include

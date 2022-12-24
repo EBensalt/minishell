@@ -6,9 +6,11 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:28:30 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/23 17:53:43 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 18:52:51 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdio.h>
 
 int	ft_isalnum(int c)
 {
@@ -28,7 +30,7 @@ int	ft_isalnum_0(int c)
 int	ft_isalnum_1(int c)
 {
 	if (c != 9 && c != 32 && c != 0 && c != '\'' && c != '"'
-		&& c != '>' && c != '<' && c != '|' && c != '$')
+		&& c != '>' && c != '<' && c != '|' && c != '$' && c != '?')
 		return (1);
 	return (0);
 }

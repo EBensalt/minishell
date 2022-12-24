@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:04:51 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/23 18:09:34 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 20:04:17 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ char	*lexer_get_value_norm5(t_lexer *lexer, char *value, t_list *list)
 		}
 		value = ft_strjoin(value, my_getenv(env, list));
 		free(env);
+	}
+	if (lexer->c == '$' && lexer->str[lexer->i + 1] == '?')
+	{
+		lexer_advance(lexer);
+		value = ft_strjoin(value, ft_itoa(g_exit_c));
+		lexer_advance(lexer);
 	}
 	return (value);
 }

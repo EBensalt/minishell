@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:43:21 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/24 02:43:58 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:52:42 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ t_list	*init_env(char **env)
 void	handler(int i)
 {
 	(void)i;
+	g_exit_c = 1;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -169,8 +170,8 @@ int	main(int argc, char **argv, char **env)
 	{
 		signal(SIGINT, handler);
 		signal(SIGQUIT, SIG_IGN);
-		g_exit = 0;
 		err = 0;
+		g_exit = 0;
 		str = readline("Minishell$ ");
 		if (!str)
 		{
@@ -182,6 +183,12 @@ int	main(int argc, char **argv, char **env)
 			add_history(str);
 			lexer = init_lexer(str);
 			line = parser(lexer, list);
+			// while (line)
+			// {
+			// 	printf("%s\n", line->value);
+			// 	line = line->next;
+			// }
+			// exit(0);
 			main_norm(line, list, env);
 			if (g_exit != 0)
 				g_exit_c = g_exit;

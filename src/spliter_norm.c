@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:40:50 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/24 02:51:06 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 14:57:21 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ int	cmd_fd_norm2(t_cmd *cmd, t_line *ptr)
 {
 	if (cmd->fd_o == -1)
 	{
-		printf("\033[0;31merror\033[0m : %s Is directory\n",
+		printf("error : %s Is directory\n",
 			ptr->next->value);
-		g_exit = 7;
+		g_exit = 1;
+		err = 1;
 		return (1);
 	}
 	return (0);
@@ -43,9 +44,10 @@ int	cmd_fd_norm1(t_cmd *cmd, t_line *ptr)
 	}
 	if (cmd->fd_i == -1)
 	{
-		printf("\033[0;31merror\033[0m : %s no such file or directory\n",
+		printf("error : %s no such file or directory\n",
 			ptr->next->value);
-		g_exit = 6;
+		g_exit = 1;
+		err = 1;
 		return (1);
 	}
 	i = cmd_fd_norm2(cmd, ptr);

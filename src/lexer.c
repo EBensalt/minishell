@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:36:45 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/23 18:10:46 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 19:55:31 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,27 @@ char	*lexer_get_value_norm1(t_lexer *lexer, int type,
 		lexer_advance(lexer);
 		value = ft_strjoin(value, ft_itoa(g_exit_c));
 		lexer_advance(lexer);
+		value = lexer_get_value_help(lexer, value, list);
 	}
 	if (type == TEXT)
 	{
-		if (lexer->c == '$')
-		{
-			value = ft_strjoin(value, lexer->s_c);
-			lexer_advance(lexer);
-		}
-		while (ft_isalnum_0(lexer->c) == 1)
-		{
-			if (lexer->c == '\'')
-				value = ft_strjoin(value, lexer_get_value(lexer, S_QUOT, list));
-			if (lexer->c == '"')
-				value = ft_strjoin(value, lexer_get_value(lexer, D_QUOT, list));
-			if (lexer->c == '$')
-				value = ft_strjoin(value, lexer_get_value(lexer, ENV_VA, list));
-			if (ft_isalnum_1(lexer->c) == 1)
-			{
-				value = ft_strjoin(value, lexer->s_c);
-				lexer_advance(lexer);
-			}
-		}
+		value = lexer_get_value_help(lexer, value, list);
+		// while (ft_isalnum_0(lexer->c) == 1)
+		// {
+		// 	if (lexer->c == '\'')
+		// 		value = ft_strjoin(value, lexer_get_value(lexer, S_QUOT, list));
+		// 	else if (lexer->c == '"')
+		// 		value = ft_strjoin(value, lexer_get_value(lexer, D_QUOT, list));
+		// 	else if (lexer->c == '$' && lexer->str[lexer->i + 1] == '?')
+		// 		value = ft_strjoin(value, lexer_get_value(lexer, EXIT_C, list));
+		// 	else if (lexer->c == '$')
+		// 		value = ft_strjoin(value, lexer_get_value(lexer, ENV_VA, list));
+		// 	else if (ft_isalnum_1(lexer->c) == 1)
+		// 	{
+		// 		value = ft_strjoin(value, lexer->s_c);
+		// 		lexer_advance(lexer);
+		// 	}
+		// }
 	}
 	return (value);
 }
@@ -92,7 +91,7 @@ char	*lexer_get_value(t_lexer *lexer, int type, t_list *list)
 		{
 			if (lexer->c == '\0')
 			{
-				printf("\033[0;31merror\033[0m : all quotes should be closed\n");
+				printf("error : all quotes should be closed\n");
 				g_exit = 1;
 				return (0);
 			}
@@ -100,7 +99,35 @@ char	*lexer_get_value(t_lexer *lexer, int type, t_list *list)
 			lexer_advance(lexer);
 		}
 		lexer_advance(lexer);
+		value = lexer_get_value_help(lexer, value, list);
 	}
 	value = lexer_get_value_norm1(lexer, type, value, list);
+	return (value);
+}
+
+char	*lexer_get_value_help(t_lexer *lexer, char *value, t_list *list)
+{
+	while (ft_isalnum_0(lexer->c) == 1)
+	{
+		if (ft_isalnum_1(lexer->c) == 1)
+		{
+			value = ft_strjoin(value, lexer->s_c);
+			lexer_advance(lexer);
+		}
+		else if (lexer->c == '$' && (lexer->str[lexer->i + 1] == 32
+				|| lexer->str[lexer->i + 1] == 9 || !lexer->str[lexer->i + 1]))
+		{
+			value = ft_strjoin(value, lexer->s_c);
+			lexer_advance(lexer);
+		}
+		else if (lexer->c == '\'')
+			value = ft_strjoin(value, lexer_get_value(lexer, S_QUOT, list));
+		else if (lexer->c == '"')
+			value = ft_strjoin(value, lexer_get_value(lexer, D_QUOT, list));
+		else if (lexer->c == '$' && lexer->str[lexer->i + 1] == '?')
+			value = ft_strjoin(value, lexer_get_value(lexer, EXIT_C, list));
+		else if (lexer->c == '$')
+			value = ft_strjoin(value, lexer_get_value(lexer, ENV_VA, list));
+	}
 	return (value);
 }

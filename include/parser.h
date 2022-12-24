@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 03:27:20 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/23 19:04:35 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 17:12:12 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_cmd
 	int				fd_o;
 	int				tem;
 	int				error;
+	int				id;
 	struct s_cmd	*next;
 }	t_cmd;
 typedef struct s_list
@@ -63,5 +64,7 @@ void	ft_mini_help_ft_trait(char **argv, t_list *list, char *commande);
 char	**my_magic(t_list *list);
 char	*ft_strchr(const char *s, int c);
 t_list	*builtins_exec(t_cmd *cmd, t_list *list);
+char	**ft_split_exec(char const *s, char c);
+char	*lexer_get_value_help(t_lexer *lexer, char *value, t_list *list);
 
 #endif

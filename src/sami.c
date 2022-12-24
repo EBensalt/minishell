@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:49:53 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/24 02:41:24 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:14:04 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ t_cmd	*command_creation(t_cmd *cmd)
 	int		i;
 
 	str = getenv("PATH");
-	path = ft_split(str, ':');
+	path = ft_split_exec(str, ':');
 	i = -1;
 	while (path[++i])
 	{
@@ -295,10 +295,11 @@ void	pipe_exec(t_cmd *cmd, char **env, t_list *list)
 {
 	t_cmd	*ptr;
 	int		fd[2];
-	int		id;
+	// int		id;
+	int		status;
 
 	ptr = cmd;
-	// int status;
+	status = 0;
 	while (cmd)
 	{
 		if (cmd->next)
@@ -306,13 +307,13 @@ void	pipe_exec(t_cmd *cmd, char **env, t_list *list)
 			pipe(fd);
 			cmd->next->tem = fd[0];
 		}
-		id = fork();
-		if (id == -1)
+		cmd->id = fork();
+		if (cmd->id == -1)
 		{
 			printf("error : fork :Resource temporarily unavailable\n");
 			break ;
 		}
-		if (id == 0)
+		if (cmd->id == 0)
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
@@ -343,8 +344,28 @@ void	pipe_exec(t_cmd *cmd, char **env, t_list *list)
 	signal(SIGQUIT, handler0);
 	if (ptr->next)
 		close(fd[0]);
-	while (wait(NULL) != -1)
-		;
+	while (ptr)
+	{
+		waitpid(ptr->id, &status, 0);
+		if (WIFEXITED(status))
+			g_exit = WEXITSTATUS(status);
+		else
+			g_exit = 128 + WTERMSIG(status);
+		ptr = ptr->next;
+	}
+	// while (wait(&status) != -1)
+	// 	;
+	// if (WIFEXITED(status)/* || WTERMSIG(status) == 13*/)
+	// {
+	// 	g_exit = WEXITSTATUS(status);
+	// 	printf("ok_1\n");
+	// }
+	// else
+	// {
+	// 	g_exit = 128 + WTERMSIG(status);
+	// 	printf("ok_2\n");
+	// }
+	// printf("%d\n", g_exit);
 	// waitpid(id, NULL, 0);
 }
 

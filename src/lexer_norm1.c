@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:14:29 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/23 17:59:55 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 19:48:38 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ char *value, t_list *list)
 		{
 			if (lexer->c == '\0')
 			{
-				printf("\033[0;31merror\033[0m : all quotes should be closed\n");
-				g_exit = 2;
+				printf("error : all quotes should be closed\n");
+				g_exit = 1;
 				return (0);
 			}
 			value = lexer_get_value_norm5(lexer, value, list);
@@ -85,6 +85,7 @@ char *value, t_list *list)
 			lexer_advance(lexer);
 		}
 		lexer_advance(lexer);
+		value = lexer_get_value_help(lexer, value, list);
 	}
 	return (value);
 }
@@ -127,6 +128,7 @@ char *value, t_list *list)
 			value = ft_strjoin(value, my_getenv(env, list));
 			free(env);
 		}
+		value = lexer_get_value_help(lexer, value, list);
 	}
 	return (value);
 }
