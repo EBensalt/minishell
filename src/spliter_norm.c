@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:40:50 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/18 23:38:27 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 02:51:06 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	cmd_fd_norm1(t_cmd *cmd, t_line *ptr)
 	return (i);
 }
 
-void	cmd_fd_norm4(t_line *ptr, int fd[2])
+void	cmd_fd_norm4(t_line *ptr, int fd)
 {
 	char	*str;
 	int		i;
@@ -66,32 +66,44 @@ void	cmd_fd_norm4(t_line *ptr, int fd[2])
 			break ;
 		}
 		i = ft_strlen(str);
-		write(fd[1], str, i);
+		write(fd, str, i);
+		write(fd, "\n", 1);
 		free(str);
 	}
 }
 
+void	handler_herdock(int i)
+{
+	(void)i;
+	unlink("/tmp/minishell_heredoc");
+	exit(1);
+}
+
 void	cmd_fd_norm3(t_cmd *cmd, t_line *ptr)
 {
-	int		fd[2];
 	int		id;
+	int		fd;
 
-	if (ptr->type == DI_RED)
+	if (ptr->type == DI_RED && !err)
 	{
-		pipe(fd);
-		cmd->fd_i = fd[0];
+		fd = open("/tmp/minishell_heredoc", O_CREAT | O_TRUNC | O_WRONLY, 0777);
 		id = fork();
 		if (id == 0)
 		{
-			close(fd[0]);
-			if (cmd->fd_i != 0)
-				close(cmd->fd_i);
+			signal(SIGINT, handler_herdock);
 			cmd_fd_norm4(ptr, fd);
-			close(fd[1]);
+			close(fd);
 			exit(0);
 		}
-		else
-			wait(NULL);
+		signal(SIGINT, SIG_IGN);
+		wait(NULL);
+		close(fd);
+		cmd->fd_i = open("/tmp/minishell_heredoc", O_RDONLY);
+		if (cmd->fd_i == -1)
+		{
+			err = 1;
+			cmd->fd_i = 0;
+		}
 	}
 }
 

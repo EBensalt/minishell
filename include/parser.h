@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 03:27:20 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/18 22:54:23 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:04:35 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_cmd
 	char			**cmd_line;
 	int				fd_i;
 	int				fd_o;
+	int				tem;
 	int				error;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -57,5 +58,10 @@ void	add_nood(t_line **line, t_token *token);
 int		check_space(t_token *token);
 t_list	*abdellatif_execution(t_cmd *cmd, t_list *list, char **env);
 char	*my_getenv(char *env, t_list *list);
+int		search_commande(t_list *list, char *commande, char **argv);
+void	ft_mini_help_ft_trait(char **argv, t_list *list, char *commande);
+char	**my_magic(t_list *list);
+char	*ft_strchr(const char *s, int c);
+t_list	*builtins_exec(t_cmd *cmd, t_list *list);
 
 #endif

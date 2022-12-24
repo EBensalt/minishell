@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:19:46 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/16 14:09:24 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/23 22:40:14 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 	unsigned char	*c;
 	size_t			d;
 
+	if (!s1)
+		return (1);
 	b = (unsigned char *)s1;
 	c = (unsigned char *)s2;
 	a = 0;

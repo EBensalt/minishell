@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:04:51 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/18 22:28:01 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/23 18:09:34 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ char	*lexer_get_value_norm5(t_lexer *lexer, char *value, t_list *list)
 {
 	char	*env;
 
-	while (lexer->c == '$' && ft_isalnum(lexer->str[lexer->i + 1]) == 1)
+	while (lexer->c == '$' && ft_isalnum_1(lexer->str[lexer->i + 1]) == 1)
 	{
 		lexer_advance(lexer);
 		env = NULL;
-		while (ft_isalnum(lexer->c) == 1)
+		while (ft_isalnum_1(lexer->c) == 1)
 		{
 			env = ft_strjoin(env, lexer->s_c);
 			lexer_advance(lexer);

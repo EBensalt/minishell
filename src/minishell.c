@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:43:21 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/19 13:52:59 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/24 02:43:58 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,8 @@ void	main_norm(t_line *line, t_list *list, char **env)
 		if (checker(line) == 0)
 		{
 			cmd = spliter(line);
-			if (!(cmd && cmd->error != 0))
+			if (cmd->cmd && !err)
 				abdellatif_execution(cmd, list, env);
-			// printf("%d, %d\n", cmd->fd_i, cmd->fd_o);
 			ft_close(cmd);
 			g_exit_c = 0;
 			my_free(cmd, line);
@@ -145,6 +144,15 @@ t_list	*init_env(char **env)
 	return (list);
 }
 
+void	handler(int i)
+{
+	(void)i;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*str;
@@ -156,17 +164,19 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	g_exit_c = 0;
 	list = init_env(env);
-	// while (list)
-	// {
-	// 	printf("%s=%s\n", list->first, list->second);
-	// 	list = list->next;
-	// }
-	// exit(0);
 	list->original = list;
 	while (1)
 	{
+		signal(SIGINT, handler);
+		signal(SIGQUIT, SIG_IGN);
 		g_exit = 0;
-		str = readline("Minishell>> ");
+		err = 0;
+		str = readline("Minishell$ ");
+		if (!str)
+		{
+			printf("exit\n");
+			exit(0);
+		}
 		if (str[0] != 0)
 		{
 			add_history(str);

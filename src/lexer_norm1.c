@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:14:29 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/18 22:53:59 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/23 17:59:55 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,11 @@ char *value, t_list *list)
 	value = lexer_get_value_norm3(lexer, type, value, list);
 	if (type == ENV_VA)
 	{
-		while (lexer->c == '$' && ft_isalnum_0(lexer->str[lexer->i + 1]) == 1)
+		while (lexer->c == '$' && ft_isalnum_1(lexer->str[lexer->i + 1]) == 1)
 		{
 			lexer_advance(lexer);
 			env = NULL;
-			while (ft_isalnum_0(lexer->c) == 1)
+			while (ft_isalnum_1(lexer->c) == 1)
 			{
 				env = ft_strjoin(env, lexer->s_c);
 				lexer_advance(lexer);

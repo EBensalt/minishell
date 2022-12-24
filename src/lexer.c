@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:36:45 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/18 22:48:46 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/23 18:10:46 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,17 @@ char	*lexer_get_value_norm1(t_lexer *lexer, int type,
 		}
 		while (ft_isalnum_0(lexer->c) == 1)
 		{
-			value = ft_strjoin(value, lexer->s_c);
-			lexer_advance(lexer);
+			if (lexer->c == '\'')
+				value = ft_strjoin(value, lexer_get_value(lexer, S_QUOT, list));
+			if (lexer->c == '"')
+				value = ft_strjoin(value, lexer_get_value(lexer, D_QUOT, list));
+			if (lexer->c == '$')
+				value = ft_strjoin(value, lexer_get_value(lexer, ENV_VA, list));
+			if (ft_isalnum_1(lexer->c) == 1)
+			{
+				value = ft_strjoin(value, lexer->s_c);
+				lexer_advance(lexer);
+			}
 		}
 	}
 	return (value);
