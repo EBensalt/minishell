@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:36:45 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/24 19:55:31 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/28 10:56:42 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,47 @@ char	*lexer_get_value_norm1(t_lexer *lexer, int type,
 		// 	}
 		// }
 	}
+	if (type == D_QUOT_HELP)
+	{
+		heredoc = 1;
+		lexer_advance(lexer);
+		while (lexer->c != '\"')
+		{
+			if (lexer->c == '\0')
+			{
+				printf("error : all quotes should be closed\n");
+				g_exit = 1;
+				return (0);
+			}
+			value = ft_strjoin(value, lexer->s_c);
+			lexer_advance(lexer);
+		}
+		lexer_advance(lexer);
+	}
+	if (type == HD_HELP)
+	{
+		lexer_skip_whitespaces(lexer);
+		while (ft_isalnum_0(lexer->c) == 1)
+		{
+			if (ft_isalnum_1(lexer->c) == 1)
+			{
+				value = ft_strjoin(value, lexer->s_c);
+				lexer_advance(lexer);
+			}
+			else if (lexer->c == '$' || lexer->c == '?')
+			{
+				value = ft_strjoin(value, lexer->s_c);
+				lexer_advance(lexer);
+			}
+			else if (lexer->c == '\'')
+			{
+				value = ft_strjoin(value, lexer_get_value(lexer, S_QUOT, list));
+				heredoc = 1;
+			}
+			else if (lexer->c == '"')
+				value = ft_strjoin(value, lexer_get_value(lexer, D_QUOT_HELP, list));
+		}
+	}
 	return (value);
 }
 
@@ -109,13 +150,14 @@ char	*lexer_get_value_help(t_lexer *lexer, char *value, t_list *list)
 {
 	while (ft_isalnum_0(lexer->c) == 1)
 	{
-		if (ft_isalnum_1(lexer->c) == 1)
+		if (ft_isalnum_1(lexer->c) == 1 || lexer->c == '?')
 		{
 			value = ft_strjoin(value, lexer->s_c);
 			lexer_advance(lexer);
 		}
 		else if (lexer->c == '$' && (lexer->str[lexer->i + 1] == 32
 				|| lexer->str[lexer->i + 1] == 9 || !lexer->str[lexer->i + 1]))
+		// else if (lexer->c == '$' && (ft_isalnum_1(lexer->str[lexer->i + 1]) == 0 || !lexer->str[lexer->i + 1]))
 		{
 			value = ft_strjoin(value, lexer->s_c);
 			lexer_advance(lexer);

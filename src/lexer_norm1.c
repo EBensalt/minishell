@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:14:29 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/24 19:48:38 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/28 10:56:15 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ t_token	*lexer_get_next_token(t_lexer *lexer, t_list *list)
 	while (lexer->c != '\0')
 	{
 		lexer_skip_whitespaces(lexer);
+		if ((lexer->c == '\'' && lexer->str[lexer->i + 1] == '\'')
+			|| (lexer->c == '"' && lexer->str[lexer->i + 1] == '"'))
+		{
+			lexer_advance(lexer);
+			lexer_advance(lexer);
+		}
 		if (lexer->c == '\'')
 			return (init_token(lexer_get_value(lexer, S_QUOT, list), S_QUOT));
 		if (lexer->c == '"')
@@ -116,6 +122,8 @@ char *value, t_list *list)
 	value = lexer_get_value_norm3(lexer, type, value, list);
 	if (type == ENV_VA)
 	{
+		if (lexer->c == '$' && ft_isalnum_1(lexer->str[lexer->i + 1]) == 0)
+			lexer_advance(lexer);
 		while (lexer->c == '$' && ft_isalnum_1(lexer->str[lexer->i + 1]) == 1)
 		{
 			lexer_advance(lexer);
@@ -124,9 +132,11 @@ char *value, t_list *list)
 			{
 				env = ft_strjoin(env, lexer->s_c);
 				lexer_advance(lexer);
+				if (lexer->c == '/' || lexer->c == '=')
+					break ;
 			}
 			value = ft_strjoin(value, my_getenv(env, list));
-			free(env);
+			// free(env);
 		}
 		value = lexer_get_value_help(lexer, value, list);
 	}

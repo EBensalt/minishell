@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 19:32:19 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/25 03:45:40 by ebensalt         ###   ########.fr       */
+/*   Created: 2021/11/04 12:16:00 by ebensalt          #+#    #+#             */
+/*   Updated: 2022/12/28 04:13:25 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/token.h"
-#include "../include/minishell.h"
+#include "../include/parser.h"
 
-t_token	*init_token(char *value, int type)
+int	ft_isalpha(int c)
 {
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	token->value = ft_strdup(value);
-	token->e_type = type;
-	// free(value);
-	return (token);
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_')
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:40:40 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/24 17:10:56 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/28 10:55:53 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@
 # include <sys/types.h>
 # include <dirent.h>
 
-int	g_exit;
-int	g_exit_c;
-int	err;
+int		g_exit;
+int		g_exit_c;
+int		err;
+int		heredoc;
+int		am_red;
 
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);

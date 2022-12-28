@@ -8,10 +8,10 @@ void free_2d(char **str)
     i = 0;
     while(str[i])
     {
-        free(str[i]);
+        // free(str[i]);
         i++;
     }
-    free(str);
+    // free(str);
 }
 
 int	ok_x_pathv2(t_list *list, DIR *dir, char **env, char **argv)

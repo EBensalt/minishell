@@ -9,10 +9,10 @@ void	ft_fresh(char **tab)
 	i = 0;
 	while (tab[i])
     {
-		free(tab[i]);
+		// free(tab[i]);
         i++;
     }
-	free(tab);
+	// free(tab);
 	tab = NULL;
 }
 
@@ -91,7 +91,7 @@ int	ft_joinandsearch(char *path, char *commande, char **argv, t_list *l)
 		free(newpath);
 		return (1);
 	}
-	free(newpath);
+	// free(newpath);
 	return (0);
 }
 

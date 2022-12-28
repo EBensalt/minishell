@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:58:10 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/12 19:26:08 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/25 03:40:23 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (0);
 	f1(a, s1);
 	f1((a + c), s2);
-	free((char *)s1);
+	// free((char *)s1);
 	a[c + b] = '\0';
 	return (a);
 }

@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:43:21 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/24 16:52:42 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/28 10:56:52 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	my_free(t_cmd *cmd, t_line *line)
 	while (ptr0)
 	{
 		ptr0 = ptr0->next;
-		free(line->value);
-		free(line);
+		// free(line->value);
+		// free(line);
 		line = ptr0;
 	}
 	my_free_norm(cmd);
@@ -75,12 +75,25 @@ void	main_norm(t_line *line, t_list *list, char **env)
 	{
 		if (checker(line) == 0)
 		{
-			cmd = spliter(line);
-			if (cmd->cmd && !err)
+			cmd = spliter(line, list);
+			// while (cmd)
+			// {
+			// 	int	i = -1;
+			// 	while (line)
+			// 	{
+			// 		printf("%s\n", cmd->cmd_line[++i]);
+			// 		line = line->next;
+			// 	}
+			// 	cmd = cmd->next;
+			// }
+			// exit(0);
+			if (cmd && cmd->cmd && !err)
+			{
 				abdellatif_execution(cmd, list, env);
+			}
 			ft_close(cmd);
 			g_exit_c = 0;
-			my_free(cmd, line);
+			// my_free(cmd, line);
 		}
 	}
 }
@@ -115,6 +128,8 @@ t_list	*new_list(char *tmp)
 
 	listnew = malloc(sizeof(t_list));
 	listnew->first = first_node(tmp, 1);
+	if (ft_strcmp(listnew->first, tmp))
+		listnew->sepr = '=';
 	listnew->second = first_node(tmp, 2);
 	listnew->next = NULL;
 	return (listnew);
@@ -165,6 +180,12 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	g_exit_c = 0;
 	list = init_env(env);
+	// while (list)
+	// {
+	// 	printf("%s%c%s\n", list->first, list->sepr, list->second);
+	// 	list = list->next;
+	// }
+	// exit(0);
 	list->original = list;
 	while (1)
 	{
@@ -172,11 +193,13 @@ int	main(int argc, char **argv, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		err = 0;
 		g_exit = 0;
+		heredoc = 0;
+		am_red = 0;
 		str = readline("Minishell$ ");
 		if (!str)
 		{
 			printf("exit\n");
-			exit(0);
+			exit(g_exit_c);
 		}
 		if (str[0] != 0)
 		{
@@ -192,8 +215,8 @@ int	main(int argc, char **argv, char **env)
 			main_norm(line, list, env);
 			if (g_exit != 0)
 				g_exit_c = g_exit;
-			free(lexer->s_c);
-			free(lexer);
+			// free(lexer->s_c);
+			// free(lexer);
 		}
 		free(str);
 		// system("leaks minishell");

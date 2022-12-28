@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 19:32:19 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/25 03:45:40 by ebensalt         ###   ########.fr       */
+/*   Created: 2021/11/08 14:28:47 by ebensalt          #+#    #+#             */
+/*   Updated: 2022/12/28 08:30:28 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/token.h"
-#include "../include/minishell.h"
+#include "../include/parser.h"
 
-t_token	*init_token(char *value, int type)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	t_token	*token;
+	size_t	a;
+	size_t	b;
 
-	token = malloc(sizeof(t_token));
-	token->value = ft_strdup(value);
-	token->e_type = type;
-	// free(value);
-	return (token);
+	a = 0;
+	while (src[a] != '\0')
+		a++;
+	b = a;
+	if (!dst)
+		return (a);
+	a = 0;
+	if (dstsize > 0)
+	{
+		while (a < (dstsize - 1) && src[a] != '\0')
+		{
+			dst[a] = src[a];
+			a++;
+		}
+		dst[a] = '\0';
+	}
+	return (b);
 }
