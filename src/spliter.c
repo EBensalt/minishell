@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:54:16 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/27 16:05:52 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:50:04 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ t_cmd	*new_cmd_nood_norm(t_line *line, t_cmd *cmd)
 	return (cmd);
 }
 
-t_cmd	*new_cmd_nood(t_line *line, t_list *list)
+t_cmd	*new_cmd_nood(t_line *line)
 {
 	t_cmd	*cmd;
+	t_line	*ptr;
 
 	cmd = malloc(sizeof(t_cmd));
 	cmd->cmd_line = malloc((nood_nu(line) + 1) * sizeof(char *));
+	ptr = line;
 	if ((line->type == SI_RED || line->type == SO_RED || line->type == DI_RED
 			|| line->type == DO_RED) && (line->next->next
 			&& (line->next->next->type == TEXT
@@ -69,38 +71,38 @@ t_cmd	*new_cmd_nood(t_line *line, t_list *list)
 	else
 		cmd->cmd = NULL;
 	cmd = new_cmd_nood_norm(line, cmd);
-	cmd->error = cmd_fd(line, cmd, list);
+	cmd->error = cmd_fd(line, cmd);
 	cmd->next = NULL;
 	return (cmd);
 }
 
-void	add_cmd_nood(t_cmd **cmd, t_line *line, t_list *list)
+void	add_cmd_nood(t_cmd **cmd, t_line *line)
 {
 	t_cmd	*ptr;
 	t_cmd	*ptr0;
 
 	ptr = *cmd;
-	ptr0 = new_cmd_nood(line, list);
+	ptr0 = new_cmd_nood(line);
 	while (ptr->next)
 		ptr = ptr->next;
 	ptr->next = ptr0;
 }
 
-t_cmd	*spliter(t_line *line, t_list *list)
+t_cmd	*spliter(t_line *line)
 {
 	t_cmd	*cmd;
 	t_line	*ptr;
 
 	cmd = NULL;
 	if (line)
-		cmd = new_cmd_nood(line, list);
+		cmd = new_cmd_nood(line);
 	ptr = line;
 	while (ptr)
 	{
 		if (ptr->type == PIPE)
 		{
 			ptr = ptr->next;
-			add_cmd_nood(&cmd, ptr, list);
+			add_cmd_nood(&cmd, ptr);
 		}
 		ptr = ptr->next;
 	}
