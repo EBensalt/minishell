@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 18:58:10 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/12 19:26:08 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/29 09:02:52 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	b = 0;
 	while (s2[b] != '\0')
 		b++;
-	a = malloc(((c + b) + 1) * sizeof(char));
+	a = my_malloc(((c + b) + 1) * sizeof(char));
 	if (a == NULL)
 		return (0);
 	f1(a, s1);
 	f1((a + c), s2);
-	free((char *)s1);
+	// free((char *)s1);
 	a[c + b] = '\0';
 	return (a);
 }

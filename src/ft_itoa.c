@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 17:34:52 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/15 17:01:18 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/29 09:01:54 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_itoa(int n)
 	unsigned int	d;
 
 	b = f1(n);
-	a = (char *)malloc((b + 1) * sizeof(char));
+	a = (char *)my_malloc((b + 1) * sizeof(char));
 	if (a == NULL)
 		return (0);
 	if (n < 0)

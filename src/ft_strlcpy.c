@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 16:31:09 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/24 17:12:09 by ebensalt         ###   ########.fr       */
+/*   Created: 2021/11/08 14:28:47 by ebensalt          #+#    #+#             */
+/*   Updated: 2022/12/28 08:30:28 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "../include/parser.h"
 
-typedef struct s_lexer
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	char	*str;
-	char	c;
-	char	*s_c;
-	int		i;
-}	t_lexer;
+	size_t	a;
+	size_t	b;
 
-t_lexer	*init_lexer(char *str);
-void	lexer_advance(t_lexer *lexer);
-void	lexer_skip_whitespaces(t_lexer *lexer);
-void	lexer_advance_all(t_lexer *lexer);
-#endif
+	a = 0;
+	while (src[a] != '\0')
+		a++;
+	b = a;
+	if (!dst)
+		return (a);
+	a = 0;
+	if (dstsize > 0)
+	{
+		while (a < (dstsize - 1) && src[a] != '\0')
+		{
+			dst[a] = src[a];
+			a++;
+		}
+		dst[a] = '\0';
+	}
+	return (b);
+}

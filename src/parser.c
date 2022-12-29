@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 03:27:24 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/13 15:31:32 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/29 09:04:09 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ t_line	*new_nood(t_token *token)
 {
 	t_line	*nood;
 
-	nood = malloc(sizeof(t_line));
+	nood = my_malloc(sizeof(t_line));
 	nood->value = ft_strdup(token->value);
 	nood->type = token->e_type;
 	nood->next = NULL;
-	free(token->value);
+	// free(token->value);
 	return (nood);
 }
 
@@ -62,7 +62,7 @@ int	check_space(t_token *token)
 	return (0);
 }
 
-t_line	*parser(t_lexer *lexer)
+t_line	*parser(t_lexer *lexer, t_list *list)
 {
 	t_token	*token;
 	t_line	*line;
@@ -70,11 +70,20 @@ t_line	*parser(t_lexer *lexer)
 	line = NULL;
 	while (lexer->c != '\0')
 	{
-		token = lexer_get_next_token(lexer);
+		token = lexer_get_next_token(lexer, list);
 		if (!token)
 			break ;
 		line = parser_norm1(token, line);
-		free(token);
+		// printf("%s\n", token->value);
+		if (token->e_type == DI_RED)
+		{
+			token = init_token(lexer_get_value(lexer, HD_HELP, list), HD_HELP);
+			if (!token)
+				break ;
+			line = parser_norm1(token, line);
+			// printf("-----%s\n", token->value);
+		}
+		// free(token);
 	}
 	return (line);
 }

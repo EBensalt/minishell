@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:54:16 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/15 16:50:04 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/29 09:05:55 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,12 @@ t_cmd	*new_cmd_nood_norm(t_line *line, t_cmd *cmd)
 	return (cmd);
 }
 
-t_cmd	*new_cmd_nood(t_line *line)
+t_cmd	*new_cmd_nood(t_line *line, t_list *list)
 {
 	t_cmd	*cmd;
-	t_line	*ptr;
 
-	cmd = malloc(sizeof(t_cmd));
-	cmd->cmd_line = malloc((nood_nu(line) + 1) * sizeof(char *));
-	ptr = line;
+	cmd = my_malloc(sizeof(t_cmd));
+	cmd->cmd_line = my_malloc((nood_nu(line) + 1) * sizeof(char *));
 	if ((line->type == SI_RED || line->type == SO_RED || line->type == DI_RED
 			|| line->type == DO_RED) && (line->next->next
 			&& (line->next->next->type == TEXT
@@ -71,38 +69,38 @@ t_cmd	*new_cmd_nood(t_line *line)
 	else
 		cmd->cmd = NULL;
 	cmd = new_cmd_nood_norm(line, cmd);
-	cmd->error = cmd_fd(line, cmd);
+	cmd->error = cmd_fd(line, cmd, list);
 	cmd->next = NULL;
 	return (cmd);
 }
 
-void	add_cmd_nood(t_cmd **cmd, t_line *line)
+void	add_cmd_nood(t_cmd **cmd, t_line *line, t_list *list)
 {
 	t_cmd	*ptr;
 	t_cmd	*ptr0;
 
 	ptr = *cmd;
-	ptr0 = new_cmd_nood(line);
+	ptr0 = new_cmd_nood(line, list);
 	while (ptr->next)
 		ptr = ptr->next;
 	ptr->next = ptr0;
 }
 
-t_cmd	*spliter(t_line *line)
+t_cmd	*spliter(t_line *line, t_list *list)
 {
 	t_cmd	*cmd;
 	t_line	*ptr;
 
 	cmd = NULL;
 	if (line)
-		cmd = new_cmd_nood(line);
+		cmd = new_cmd_nood(line, list);
 	ptr = line;
 	while (ptr)
 	{
 		if (ptr->type == PIPE)
 		{
 			ptr = ptr->next;
-			add_cmd_nood(&cmd, ptr);
+			add_cmd_nood(&cmd, ptr, list);
 		}
 		ptr = ptr->next;
 	}

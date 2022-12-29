@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/21 01:33:47 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/29 09:02:32 by ebensalt         ###   ########.fr       */
+/*   Created: 2022/12/24 14:49:36 by ebensalt          #+#    #+#             */
+/*   Updated: 2022/12/29 09:02:14 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static char	*fcpy(char const *s, char c, char *b)
 		d++;
 		a++;
 	}
-	b[d] = '\0';
+	b[d] = '/';
+	b[d + 1] = '\0';
 	return (b);
 }
 
@@ -85,7 +86,7 @@ static char	**falloc(char const *s, char c, int a, int f)
 		while (s[e] == c && s[e] != '\0')
 			e++;
 		f = fchr(&s[e], c);
-		b[d] = (char *)my_malloc((f + 1) * sizeof(char));
+		b[d] = (char *)my_malloc((f + 2) * sizeof(char));
 		if (b[d] == NULL)
 			return (0);
 		b[d] = fcpy(&s[e], c, b[d]);
@@ -96,7 +97,7 @@ static char	**falloc(char const *s, char c, int a, int f)
 	return (b);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_exec(char const *s, char c)
 {
 	int		a;
 	char	**b;

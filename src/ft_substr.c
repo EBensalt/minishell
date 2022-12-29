@@ -1,36 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 16:19:15 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/29 09:02:43 by ebensalt         ###   ########.fr       */
+/*   Created: 2021/11/08 17:44:53 by hkhalil           #+#    #+#             */
+/*   Updated: 2022/12/29 09:36:57 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_strdup(const char *s1)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int		a;
-	char	*b;
+	int		i;
+	char	*sub;
 
-	if (!s1)
+	if (!s)
 		return (0);
-	a = 0;
-	while (s1[a] != '\0')
-		a++;
-	b = my_malloc(a + 1 * sizeof(char));
-	if (b == NULL)
+	if (ft_strlen(s) <= start || !len)
+		sub = my_malloc(1);
+	else if (ft_strlen(s) <= len + start)
+		sub = my_malloc(ft_strlen(s) - start + 1);
+	else
+		sub = my_malloc(len + 1);
+	if (!sub)
 		return (0);
-	a = 0;
-	while (s1[a] != '\0')
+	i = 0;
+	if (ft_strlen(s) > start)
 	{
-		b[a] = s1[a];
-		a++;
+		while (s[i + start] && len > 0)
+		{
+			sub[i] = s[start + i];
+			i++;
+			len--;
+		}
 	}
-	b[a] = '\0';
-	return (b);
+	sub[i] = 0;
+	return ((char *)sub);
 }

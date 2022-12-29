@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   my_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 16:31:09 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/24 17:12:09 by ebensalt         ###   ########.fr       */
+/*   Created: 2022/12/29 08:50:12 by ebensalt          #+#    #+#             */
+/*   Updated: 2022/12/29 09:11:45 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "../include/parser.h"
 
-typedef struct s_lexer
+void	*my_malloc(size_t size)
 {
-	char	*str;
-	char	c;
-	char	*s_c;
-	int		i;
-}	t_lexer;
+	void	*ptr;
 
-t_lexer	*init_lexer(char *str);
-void	lexer_advance(t_lexer *lexer);
-void	lexer_skip_whitespaces(t_lexer *lexer);
-void	lexer_advance_all(t_lexer *lexer);
-#endif
+	ptr = malloc(size);
+	alloc[count] = ptr;
+	count++;
+	return (ptr);
+}
+
+void	my_free(void)
+{
+	while (count >= 0)
+	{
+		free(alloc[count]);
+		count--;
+	}
+}

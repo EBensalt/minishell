@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:33:53 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/10/29 12:10:32 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/26 04:40:18 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ typedef struct s_token
 		DO_RED,
 		PIPE,
 		ENV_VA,
-		EXIT_C
+		EXIT_C,
+		HD_HELP,
+		D_QUOT_HELP
 	}	e_type;
 }	t_token;
 
