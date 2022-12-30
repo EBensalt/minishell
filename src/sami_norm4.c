@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 04:20:52 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 10:06:31 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:22:24 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,13 @@ void	pipe_exec_norm(t_cmd *ptr, int status)
 
 t_cmd	*pipe_exec_norm1(t_cmd *cmd, t_cmd *ptr, int fd[2], t_list *list)
 {
-	if (cmd->error == 0)
+	cmd->id = fork();
+	if (cmd->id == -1)
 	{
-		cmd->id = fork();
-		if (pipe_exec_norm3(cmd, ptr, fd, list))
-			return (0);
+		write(2, "error : fork :Resource temporarily unavailable\n", 47);
+		return (0);
 	}
+	pipe_exec_norm3(cmd, ptr, fd, list);
 	cmd = pipe_exec_norm2(cmd, ptr, fd);
 	return (cmd);
 }

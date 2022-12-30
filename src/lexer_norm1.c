@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:14:29 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 09:53:47 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:16:07 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_token	*lexer_get_next_token_norm(t_lexer *lexer, t_list *list)
 	{
 		if (lexer->str[lexer->i + 1] == '?')
 			return (init_token(lexer_get_value(lexer, EXIT_C, list), EXIT_C));
-		if (ft_isalnum_0(lexer->str[lexer->i + 1]) == 1)
+		if (ft_isalnum_1(lexer->str[lexer->i + 1]) == 1)
 			return (init_token(lexer_get_value(lexer, ENV_VA, list), ENV_VA));
 		else
 			return (init_token(lexer_get_value(lexer, TEXT, list), TEXT));

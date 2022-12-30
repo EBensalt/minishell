@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 04:06:39 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 09:56:13 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:16:52 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	change_pwd(t_list *list, char *s)
 {
 	char	*ptr;
 
-	while (ft_strcmp(list->first, s))
+	while (list && ft_strcmp(list->first, s))
 		list = list->next;
-	if (!ft_strcmp(list->first, s))
+	if (list && !ft_strcmp(list->first, s))
 	{
 		ptr = getcwd(NULL, 0);
 		list->second = ft_strdup(ptr);

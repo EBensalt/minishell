@@ -6,35 +6,12 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 20:49:53 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 10:17:03 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:17:44 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/parser.h"
-
-// t_list   *ft_exportvar(char *str, t_list *list)
-// {
-//     t_list *tmp;
-//     char *word;
-
-//     tmp = NULL;
-//     list->original = list;
-//     while (list->original->next != NULL)
-//     {
-//         word = first_node(str, 1);
-//         if (list->original->first == word)
-//         {
-//             // free(list->original->second);
-//             list->original->second = first_node(str, 2);
-//             return (list);
-//         }
-//         list->original = list->original->next;
-//     }
-//     tmp = new_list(str);
-//     list->original->next = tmp;
-//     return(list);
-// }
 
 t_cmd	*command_creation(t_cmd *cmd, t_list *list)
 {

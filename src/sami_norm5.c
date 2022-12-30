@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 04:46:59 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 10:13:36 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:22:55 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd	*pipe_exec_norm2(t_cmd *cmd, t_cmd *ptr, int fd[2])
 	return (cmd);
 }
 
-int	pipe_exec_norm3(t_cmd *cmd, t_cmd *ptr, int fd[2], t_list *list)
+void	pipe_exec_norm3(t_cmd *cmd, t_cmd *ptr, int fd[2], t_list *list)
 {
 	if (cmd->id == 0)
 	{
@@ -42,13 +42,9 @@ int	pipe_exec_norm3(t_cmd *cmd, t_cmd *ptr, int fd[2], t_list *list)
 		}
 		if (cmd && cmd->error == 0)
 			my_execve(cmd, list);
+		else
+			exit(g_global.g_exit);
 	}
-	if (cmd->id == -1)
-	{
-		write(2, "error : fork :Resource temporarily unavailable\n", 47);
-		return (1);
-	}
-	return (0);
 }
 
 int	ft_cd_norm(DIR *ptr, t_cmd *cmd, t_list *list, char *ptr0)

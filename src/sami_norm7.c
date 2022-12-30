@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 08:49:17 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 10:32:54 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:08:27 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	list_checker_norm3(t_cmd *cmd, int j)
 	write(2, "': not a valid identifier\n", 26);
 }
 
-void	cmd_fd_norm9(t_line *ptr)
+void	cmd_fd_norm9(t_line *ptr, DIR *ptr0)
 {
-	if (ptr)
+	if (ptr0)
 	{
 		write(2, "error : ", 8);
 		ft_putstr_fd(ptr->next->value, 2);

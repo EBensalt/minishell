@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 20:54:16 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/29 09:05:55 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:18:03 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_cmd	*new_cmd_nood(t_line *line, t_list *list)
 	else
 		cmd->cmd = NULL;
 	cmd = new_cmd_nood_norm(line, cmd);
+	if (cmd->cmd_line[0])
+		cmd->cmd = ft_strdup(cmd->cmd_line[0]);
 	cmd->error = cmd_fd(line, cmd, list);
 	cmd->next = NULL;
 	return (cmd);

@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:04:51 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 09:54:16 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:18:53 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ char	*lexer_get_value_help(t_lexer *lexer, char *value, t_list *list)
 			lexer_advance(lexer);
 		}
 		else if (lexer->c == '$' && (lexer->str[lexer->i + 1] == 32
-				|| lexer->str[lexer->i + 1] == 9 || !lexer->str[lexer->i + 1]))
+				|| lexer->str[lexer->i + 1] == 9
+				|| lexer->str[lexer->i + 1] == '$'
+				|| !lexer->str[lexer->i + 1]))
 		{
 			value = ft_strjoin(value, lexer->s_c);
 			lexer_advance(lexer);

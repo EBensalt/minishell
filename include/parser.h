@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 03:27:20 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 10:33:01 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:22:40 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		ft_echo_norm(char **str, int i);
 void		pipe_exec_norm(t_cmd *ptr, int status);
 t_cmd		*pipe_exec_norm1(t_cmd *cmd, t_cmd *ptr, int fd[2], t_list *list);
 t_cmd		*pipe_exec_norm2(t_cmd *cmd, t_cmd *ptr, int fd[2]);
-int			pipe_exec_norm3(t_cmd *cmd, t_cmd *ptr, int fd[2], t_list *list);
+void		pipe_exec_norm3(t_cmd *cmd, t_cmd *ptr, int fd[2], t_list *list);
 int			ft_cd_norm(DIR *ptr, t_cmd *cmd, t_list *list, char *ptr0);
 int			ft_cd_norm1(DIR *ptr, t_list *list);
 void		change_pwd(t_list *list, char *s);
@@ -120,6 +120,6 @@ int			cmd_fd_norm7(char *str, int fd, t_list *list);
 int			cmd_fd_norm8(char *str, int i, t_list *list, int fd);
 char		*cmd_fd_norm5(char *str, int i, t_list *list);
 void		list_checker_norm3(t_cmd *cmd, int j);
-void		cmd_fd_norm9(t_line *ptr);
+void		cmd_fd_norm9(t_line *ptr, DIR *ptr0);
 
 #endif

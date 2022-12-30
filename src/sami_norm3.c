@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 04:10:19 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 10:01:56 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:17:06 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_list	*abdellatif_execution(t_cmd *cmd, t_list *list)
 
 	if (cmd->next)
 		pipe_exec(cmd, list);
-	if (!check_built(cmd))
+	else if (!check_built(cmd))
 	{
 		tmp0 = dup(0);
 		tmp1 = dup(1);
@@ -99,7 +99,7 @@ t_list	*abdellatif_execution(t_cmd *cmd, t_list *list)
 		dup2(tmp1, 1);
 		close(tmp1);
 	}
-	if (g_global.built == 1)
+	else if (g_global.built == 1)
 		pipe_exec(cmd, list);
 	return (list);
 }

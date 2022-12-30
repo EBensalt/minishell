@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:40:50 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 10:32:31 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:17:52 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ int	cmd_fd_norm2(t_cmd *cmd, t_line *ptr)
 			write(2, " Permission denied\n", 19);
 		}
 		else
-			cmd_fd_norm9(ptr);
-		free(ptr0->__dd_buf);
+			cmd_fd_norm9(ptr, ptr0);
 		free(ptr0);
 		g_global.g_exit = 1;
-		cmd->error = 1;
 		return (1);
 	}
 	return (0);
@@ -58,7 +56,6 @@ int	cmd_fd_norm1(t_cmd *cmd, t_line *ptr)
 	if (cmd->fd_i == -1)
 	{
 		cmd_fd_norm6(ptr);
-		cmd->error = 1;
 		return (1);
 	}
 	i = cmd_fd_norm2(cmd, ptr);

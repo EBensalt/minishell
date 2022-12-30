@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 05:36:17 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/30 10:33:10 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:59:29 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	ft_unset_norm(t_cmd *cmd, int j, t_list **list)
 	i = -1;
 	while (cmd->cmd_line[j][++i])
 	{
-		if (!ft_isalnum_2(cmd->cmd_line[j][i]))
+		if (!ft_isalnum_2(cmd->cmd_line[j][i]) || cmd->cmd_line[j][i] == '+')
 		{
-			write(2, "minishell: unset: '", 29);
+			write(2, "minishell: unset: '", 19);
 			ft_putstr_fd(cmd->cmd_line[j], 2);
 			write(2, "': not a valid identifier\n", 26);
 			j++;
