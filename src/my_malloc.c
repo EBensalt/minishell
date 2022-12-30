@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 08:50:12 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/29 09:11:45 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 03:12:14 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	*my_malloc(size_t size)
 	void	*ptr;
 
 	ptr = malloc(size);
-	alloc[count] = ptr;
-	count++;
+	g_global.alloc[g_global.count] = ptr;
+	g_global.count++;
 	return (ptr);
 }
 
 void	my_free(void)
 {
-	while (count >= 0)
+	while (g_global.count >= 0)
 	{
-		free(alloc[count]);
-		count--;
+		free(g_global.alloc[g_global.count]);
+		g_global.count--;
 	}
 }

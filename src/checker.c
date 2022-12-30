@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:27:18 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/28 02:08:23 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 09:53:11 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ int	checker_norm(t_line *ptr, t_line *ptr0)
 			|| ptr0->type == SI_RED || ptr0->type == SO_RED
 			|| ptr0->type == DI_RED || ptr0->type == DO_RED))
 	{
-		printf("error : redirections\n");
-		g_exit = 258;
+		write(2, "error : redirections\n", 21);
+		g_global.g_exit = 258;
 		return (1);
 	}
 	if ((ptr->type == SI_RED || ptr->type == SO_RED || ptr->type == DO_RED)
-		&& (!ptr->next->value || am_red == 1))
+		&& (!ptr->next->value || g_global.am_red == 1))
 	{
-		printf("error : ambiguous redirect\n");
-		g_exit = 1;
-		am_red = 2;
+		write(2, "error : ambiguous redirect\n", 27);
+		g_global.g_exit = 1;
+		g_global.am_red = 2;
 		return (0);
 	}
 	return (0);
@@ -50,8 +50,8 @@ int	checker(t_line *line)
 		if (ptr->type == PIPE
 			&& (ptr->next == NULL || ptr == line || ptr->type == ptr0->type))
 		{
-			printf("error : pipes error\n");
-			g_exit = 258;
+			write(2, "error : pipes error\n", 20);
+			g_global.g_exit = 258;
 			return (1);
 		}
 		i = checker_norm(ptr, ptr0);

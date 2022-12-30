@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:40:50 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/29 09:05:38 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 10:32:31 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,22 @@
 
 int	cmd_fd_norm2(t_cmd *cmd, t_line *ptr)
 {
+	DIR	*ptr0;
+
 	if (cmd->fd_o == -1)
 	{
-		if (opendir(ptr->next->value))
-			printf("error : %s Is directory\n",
-				ptr->next->value);
-		else
+		ptr0 = opendir(ptr->next->value);
+		if (access(ptr->next->value, W_OK) && !access(ptr->next->value, F_OK))
 		{
-			printf("error : %s no such file or directory\n",
-				ptr->next->value);
+			write(2, "error : ", 8);
+			ft_putstr_fd(ptr->next->value, 2);
+			write(2, " Permission denied\n", 19);
 		}
-		g_exit = 1;
+		else
+			cmd_fd_norm9(ptr);
+		free(ptr0->__dd_buf);
+		free(ptr0);
+		g_global.g_exit = 1;
 		cmd->error = 1;
 		return (1);
 	}
@@ -48,13 +53,11 @@ int	cmd_fd_norm1(t_cmd *cmd, t_line *ptr)
 			close(cmd->fd_o);
 		cmd->fd_o = open(ptr->next->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	}
-	if ((cmd->fd_i == -1 || cmd->fd_o == -1) && am_red == 2)
+	if ((cmd->fd_i == -1 || cmd->fd_o == -1) && g_global.am_red == 2)
 		return (1);
 	if (cmd->fd_i == -1)
 	{
-		printf("error : %s no such file or directory\n",
-			ptr->next->value);
-		g_exit = 1;
+		cmd_fd_norm6(ptr);
 		cmd->error = 1;
 		return (1);
 	}
@@ -85,44 +88,15 @@ void	cmd_fd_norm4(t_line *ptr, int fd, t_list *list)
 {
 	char	*str;
 	int		i;
-	int		tem;
-	char	*env;
 
 	while (1)
 	{
 		str = readline(">");
 		if (ft_strcmp(str, ptr->next->value) == 0)
-		{
-			// free(str);
 			break ;
-		}
-		if (heredoc == 0)
+		if (g_global.heredoc == 0)
 		{
-			i = -1;
-			while (str[++i])
-			{
-				if (str[i] == '$' && str[i + 1] && str[i + 1] == '?')
-				{
-					env = ft_itoa(g_exit_c);
-					tem = ft_strlen(env);
-					write(fd, env, tem);
-					i += 2;
-				}
-				else if (str[i] == '$' && str[i + 1] && ft_isalnum_1(str[i + 1]) == 1)
-				{
-					env = cmd_fd_norm5(str, i, list);
-					if (env)
-					{
-						tem = ft_strlen(env);
-						write(fd, env, tem);
-					}
-					while (ft_isalnum_1(str[++i]) == 1)
-						;
-					i--;
-				}
-				else
-					write(fd, &str[i], 1);
-			}
+			i = cmd_fd_norm7(str, fd, list);
 			write(fd, "\n", 1);
 		}
 		else
@@ -131,7 +105,6 @@ void	cmd_fd_norm4(t_line *ptr, int fd, t_list *list)
 			write(fd, str, i);
 			write(fd, "\n", 1);
 		}
-		// free(str);
 	}
 }
 
@@ -140,57 +113,4 @@ void	handler_herdock(int i)
 	(void)i;
 	unlink("/tmp/minishell_heredoc");
 	exit(1);
-}
-
-void	cmd_fd_norm3(t_cmd *cmd, t_line *ptr, t_list *list)
-{
-	int		id;
-	int		fd;
-
-	if (ptr->type == DI_RED && !err)
-	{
-		fd = open("/tmp/minishell_heredoc", O_CREAT | O_TRUNC | O_WRONLY, 0777);
-		id = fork();
-		if (id == 0)
-		{
-			signal(SIGINT, handler_herdock);
-			cmd_fd_norm4(ptr, fd, list);
-			close(fd);
-			exit(0);
-		}
-		signal(SIGINT, SIG_IGN);
-		wait(NULL);
-		close(fd);
-		cmd->fd_i = open("/tmp/minishell_heredoc", O_RDONLY);
-		if (cmd->fd_i == -1)
-		{
-			err = 1;
-			cmd->fd_i = 0;
-		}
-	}
-}
-
-int	cmd_fd(t_line *line, t_cmd *cmd, t_list *list)
-{
-	t_line	*ptr;
-	int		i;
-
-	cmd->fd_i = 0;
-	cmd->fd_o = 1;
-	ptr = line;
-	while (ptr && ptr->type != PIPE)
-	{
-		cmd_fd_norm3(cmd, ptr, list);
-		if (ptr->type == SI_RED)
-		{
-			if (cmd->fd_i != 0)
-				close(cmd->fd_i);
-			cmd->fd_i = open(ptr->next->value, O_RDONLY);
-		}
-		i = cmd_fd_norm1(cmd, ptr);
-		if (i != 0)
-			return (i);
-		ptr = ptr->next;
-	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 03:27:24 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/29 09:04:09 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 03:12:29 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_line	*new_nood(t_token *token)
 	nood->value = ft_strdup(token->value);
 	nood->type = token->e_type;
 	nood->next = NULL;
-	// free(token->value);
 	return (nood);
 }
 
@@ -74,16 +73,13 @@ t_line	*parser(t_lexer *lexer, t_list *list)
 		if (!token)
 			break ;
 		line = parser_norm1(token, line);
-		// printf("%s\n", token->value);
 		if (token->e_type == DI_RED)
 		{
 			token = init_token(lexer_get_value(lexer, HD_HELP, list), HD_HELP);
 			if (!token)
 				break ;
 			line = parser_norm1(token, line);
-			// printf("-----%s\n", token->value);
 		}
-		// free(token);
 	}
 	return (line);
 }

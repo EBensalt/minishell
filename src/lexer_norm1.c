@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:14:29 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/28 10:56:15 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 09:53:47 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 t_token	*lexer_get_next_token_norm(t_lexer *lexer, t_list *list)
 {
+	if (lexer->c == '\'')
+		return (init_token(lexer_get_value(lexer, S_QUOT, list), S_QUOT));
+	if (lexer->c == '"')
+		return (init_token(lexer_get_value(lexer, D_QUOT, list), D_QUOT));
 	if (lexer->c == '>')
 	{
 		if (lexer->str[lexer->i + 1] == '>')
@@ -51,10 +55,6 @@ t_token	*lexer_get_next_token(t_lexer *lexer, t_list *list)
 			lexer_advance(lexer);
 			lexer_advance(lexer);
 		}
-		if (lexer->c == '\'')
-			return (init_token(lexer_get_value(lexer, S_QUOT, list), S_QUOT));
-		if (lexer->c == '"')
-			return (init_token(lexer_get_value(lexer, D_QUOT, list), D_QUOT));
 		if (lexer->c == '<')
 		{
 			if (lexer->str[lexer->i + 1] == '<')
@@ -80,8 +80,8 @@ char *value, t_list *list)
 		{
 			if (lexer->c == '\0')
 			{
-				printf("error : all quotes should be closed\n");
-				g_exit = 1;
+				write(2, "error : all quotes should be closed\n", 36);
+				g_global.g_exit = 1;
 				return (0);
 			}
 			value = lexer_get_value_norm5(lexer, value, list);
@@ -136,7 +136,6 @@ char *value, t_list *list)
 					break ;
 			}
 			value = ft_strjoin(value, my_getenv(env, list));
-			// free(env);
 		}
 		value = lexer_get_value_help(lexer, value, list);
 	}

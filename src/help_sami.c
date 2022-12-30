@@ -1,17 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   help_sami.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/30 02:34:07 by ebensalt          #+#    #+#             */
+/*   Updated: 2022/12/30 02:35:41 by ebensalt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 #include "../include/parser.h"
 
-void free_2d(char **str)
+void	free_2d(char **str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while(str[i])
-    {
-        // free(str[i]);
-        i++;
-    }
-    // free(str);
+	i = 0;
+	while (str[i])
+		i++;
 }
 
 int	ok_x_pathv2(t_list *list, DIR *dir, char **env, char **argv)
@@ -37,7 +45,7 @@ int	ok_x_pathv2(t_list *list, DIR *dir, char **env, char **argv)
 			closedir(dir);
 		ft_putstr_fd("minishell: permission denied:", 2);
 		ft_putstr_fd(argv[0], 2);
-        ft_putstr_fd("\n", 2);
+		ft_putstr_fd("\n", 2);
 		return (0);
 	}
 	return (1);
@@ -59,7 +67,7 @@ void	ok_x_path(char **argv, t_list *list)
 	{
 		ft_putstr_fd("minishell: no such file or directory: ", 1);
 		ft_putstr_fd(argv[0], 1);
-        ft_putstr_fd("/n", 1);
+		ft_putstr_fd("/n", 1);
 	}
 }
 
@@ -67,7 +75,7 @@ void	another_mini_help_for_mini2(char *commande)
 {
 	ft_putstr_fd("minishell: command not found: ", 1);
 	ft_putstr_fd(commande, 1);
-    ft_putstr_fd("\n", 1);
+	ft_putstr_fd("\n", 1);
 }
 
 void	ft_mini_help_ft_trait(char **argv, t_list *list, char *commande)

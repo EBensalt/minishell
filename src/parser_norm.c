@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:00:25 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/28 01:49:41 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 03:12:42 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_line	*parser_norm2(t_token *token, t_line *line)
 	int		i;
 
 	str = ft_split(token->value, 32);
-	// free(token->value);
 	i = -1;
 	while (str[++i])
 	{
@@ -28,7 +27,6 @@ t_line	*parser_norm2(t_token *token, t_line *line)
 		else
 			add_nood(&line, token);
 	}
-	// free(str);
 	return (line);
 }
 
@@ -37,7 +35,7 @@ t_line	*parser_norm1(t_token *token, t_line *line)
 	if (token->e_type == ENV_VA && check_space(token) == 1)
 	{
 		line = parser_norm2(token, line);
-		am_red = 1;
+		g_global.am_red = 1;
 	}
 	else
 	{

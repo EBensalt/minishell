@@ -6,7 +6,7 @@
 /*   By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:40:40 by ebensalt          #+#    #+#             */
-/*   Updated: 2022/12/29 09:11:21 by ebensalt         ###   ########.fr       */
+/*   Updated: 2022/12/30 05:54:00 by ebensalt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,19 @@
 # include <sys/types.h>
 # include <dirent.h>
 
-int		g_exit;
-int		g_exit_c;
-int		err;
-int		heredoc;
-int		am_red;
-int		built;
-void	*alloc[1000000];
-int		count;
+typedef struct s_global
+{
+	int		g_exit;
+	int		g_exit_c;
+	int		err;
+	int		heredoc;
+	int		am_red;
+	int		built;
+	void	*alloc[1000000];
+	int		count;
+	int		plus;
+}	t_global;
+t_global	g_global;
 
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);

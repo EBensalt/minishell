@@ -6,7 +6,7 @@
 #    By: ebensalt <ebensalt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/23 16:08:05 by ebensalt          #+#    #+#              #
-#    Updated: 2022/12/29 09:12:22 by ebensalt         ###   ########.fr        #
+#    Updated: 2022/12/30 08:57:18 by ebensalt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,17 @@ C = src/minishell.c \
 	src/ft_atoi.c \
 	src/ft_isalpha.c \
 	src/ft_strlcpy.c \
-	src/my_malloc.c
+	src/my_malloc.c \
+	src/minishell_norm.c \
+	src/sami_norm.c \
+	src/sami_norm1.c \
+	src/sami_norm2.c \
+	src/sami_norm3.c \
+	src/sami_norm4.c \
+	src/sami_norm5.c \
+	src/sami_norm6.c \
+	src/sami_norm7.c \
+	src/spliter_norm1.c
 O = $(C:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I/goinfre/ebensalt/homebrew/opt/readline/include 
